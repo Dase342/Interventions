@@ -13,6 +13,7 @@
           <label for = "prenomId" class= "col-md-2 col-form-label text-right">
             Prénom: 
           </label>
+          
         <div class= "col-md-10">
            <input class="form-control"
             id="prenomId"
@@ -43,14 +44,89 @@
            
          </span>
 
-         
-
         </span>
-        
+ 
          </div>
-       
 
         </div>
+        <div class= "form-group row">
+        <label for = "nomId" class= "col-md-2 col-form-label text-right">
+          nom: 
+        </label>
+        <div class= "col-md-10">
+          <input class="form-control"
+           id="nomId"
+           type="text"
+           placeholder="Votre nom ici (obligatoire)"
+           formControlName="nom"
+           [ngClass]="{'is-valid': (problemeForm.get('nom').touched ||
+           problemeForm.get('nom').dirty) &&
+           (problemeForm.get('nom').valid),
+           'is-invalid': (problemeForm.get('nom').touched ||
+           problemeForm.get('nom').dirty) &&
+           (!problemeForm.get('nom').valid )}"/> 
+            <span class="form-text"  *ngIf="(problemeForm.get('nom').touched ||
+        problemeForm.get('nom').dirty) &&
+        problemeForm.get('nom').errors">
+        
+         <span *ngIf="problemeForm.get('nom').errors.required">
+         <small class="text-muted">
+          Merci de saisir votre nom de famille. 
+         </small>
+         
+       </span>
+        
+        <span *ngIf="problemeForm.get('nom').errors.rangeInvalide">
+          <small class="text-muted">
+            Veuillez entrer moins de caractères. 
+          </small>
+          
+        </span>
+
+       </span>
+
+        </div>
+
+        </div>
+        <div class= "form-group row">
+          <label for = "typeProblemeId" class= "col-md-2 col-form-label text-right">
+            Type de problème:
+          </label>
+          <div class= "col-md-10">
+            
+          
+
+            <select class="form-control"
+            id="typeProblemeId"
+            formControlName = "noProbleme" 
+            [ngClass]="{'is-valid': (problemeForm.get('noProbleme').touched ||
+              problemeForm.get('noProbleme').dirty) &&
+              (problemeForm.get('noProbleme').valid),
+              'is-invalid': (problemeForm.get('noProbleme').touched ||
+              problemeForm.get('noProbleme').dirty) &&
+              (!problemeForm.get('noProbleme').valid )}">
+            
+            <option value="">Séléctionner une catégorie de problème </option>
+            <option *ngFor="let cat of typeProbleme" [value]="cat.id">{{cat.descriptionTypeProbleme}}</option>
+            
+          </select>
+          <span class="form-text"  *ngIf="(problemeForm.get('noProbleme').touched || 
+          problemeForm.get('noProbleme').dirty) &&
+          problemeForm.get('noProbleme').errors">
+           <span *ngIf="problemeForm.get('noProbleme').errors.required">
+         <small class="text-muted">
+          Merci de sélectionner un type de problème. 
+         </small>
+         
+       </span>
+       </span>
+            
+              
+  
+          </div>
+
+        </div>
+        
            <div class="card-footer">
         <button type="button" class= "btn btn-primary btn-sm"><i class = "fa fa-save"></i>Sauvegarder</button>
         </div>
