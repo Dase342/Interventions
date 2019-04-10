@@ -28,7 +28,10 @@ export class ProblemeComponent implements OnInit {
 
         }),
        telephone: [{value: '', disabled: true}],
-       notification: [{value: 'aucun',}]
+       notification: ['aucun'],
+       descriptionProbleme: ['', [Validators.required, Validators.minLength(5)]],
+       noUnite: '',
+       dateProbleme: {value: Date(), disabled: true} 
     });
 
     this.problemes.obtenirProbleme()
