@@ -24,14 +24,19 @@ export class ProblemeComponent implements OnInit {
       noProbleme: ['',[Validators.required]],
       courrielGroup: this.fb.group({
         courriel: [{value: '', disabled: true}],
-        courrielConfirmation: [{value: '', disabled: true}],
+        courrielConfirmation: [{value: '', disabled: true}]
+
         }),
-       telephone: [{value: '', disabled: true}]
+       telephone: [{value: '', disabled: true}],
+       notification: [{value: 'aucun',}]
     });
 
     this.problemes.obtenirProbleme()
     .subscribe(cat => this.typeProbleme = cat,
                error => this.errorMessage = <any>error);  
+
+    this.problemeForm.get('notification').valueChanges
+    .subscribe(value => this.appliquerNotifications(value));
 
   }
 
