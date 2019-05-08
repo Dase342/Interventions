@@ -4,6 +4,8 @@ import { longueurMinimum } from '../shared/longueur-minimum/longueur-minimum.com
 import { TypeproblemeService } from './typeprobleme.service';
 import { ITypeProbleme } from './typeprobleme';
 import { emailMatcherValidator } from '../shared/email-matcher/email-matcher.component';
+import { IProbleme } from './probleme';
+import { ProblemeService } from './probleme.service';
 
 @Component({
   selector: 'inter-probleme',
@@ -15,7 +17,10 @@ export class ProblemeComponent implements OnInit {
   typeProbleme: ITypeProbleme[];
   errorMessage: string;
 
-  constructor(private fb: FormBuilder,private problemes: TypeproblemeService) { }
+  probleme: IProbleme;
+  messageSauvegarde: string;
+
+  constructor(private fb: FormBuilder,private problemes: TypeproblemeService, private problemeService: ProblemeService) { }
 
   ngOnInit() {
     this.problemeForm = this.fb.group({
@@ -92,7 +97,28 @@ export class ProblemeComponent implements OnInit {
     telControl.updateValueAndValidity();
     courrielGroupControl.updateValueAndValidity();
     
+    
 
+  }
+
+  save(): void {
+    if (this.problemeForm.dirty && this.problemeForm.valid) {
+         this.probleme = this.problemeForm.value;
+         // Affecter les valeurs qui proviennent du fg le plus interne.
+         this.probleme.courriel =  this.problemeForm.get('courrielGroup.courriel').value;
+         this.probleme.courrielConfirmation =  this.problemeForm.get('courrielGroup.courrielConfirmation').value;     
+       
+        this.problemeService.saveProbleme(this.probleme)
+            .subscribe( // on s'abonne car on a un retour du serveur à un moment donné avec la callback fonction
+                () => this.onSaveComplete(),  // Fonction callback
+                (error: any) => this.errorMessage = <any>error
+            );
+    } 
+  }
+  
+  onSaveComplete(): void {
+    this.problemeForm.reset();  // Pour remettre Dirty à false.  Autrement le Route Guard va dire que le formulaire n'est pas sauvegardé
+    this.messageSauvegarde = 'Votre problème a bien été sauvegardée.  Nous vous remercions.';
   }
 
 }

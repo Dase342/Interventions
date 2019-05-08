@@ -8,7 +8,7 @@ import {catchError, tap} from 'rxjs/operators'
   providedIn: 'root'
 })
 export class TypeproblemeService {
-  private baseUrl = 'api/typesprobleme';
+  private baseUrl = 'https://davidto.azurewebsites.net/api/intervention';
   constructor(private http: HttpClient) { }
   obtenirProbleme(): Observable<ITypeProbleme[]> {
     return this.http.get<ITypeProbleme[]>(this.baseUrl).pipe(
